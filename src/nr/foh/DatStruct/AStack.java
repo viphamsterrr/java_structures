@@ -52,7 +52,6 @@ public class AStack <T> implements Iterable<T>{
      * Adds specific element in the beginning of stack.
      *
      * @param thing object of previously defined type for this stack.
-     * @throws IllegalArgumentException when attempting to add a null value.
      */
     public void put(T thing) {
         size++;
@@ -63,7 +62,7 @@ public class AStack <T> implements Iterable<T>{
     /**
      * Returns first element in stack and removes it.
      *
-     * @return first element in stack.
+     * @return first element in stack. The element gone out of stack.
      * @throws NoSuchElementException when no elements present in object.
      */
     public T take() {
@@ -75,11 +74,23 @@ public class AStack <T> implements Iterable<T>{
     }
 
     /**
+     * Returns first element in stack without removing it.
+     *
+     * @return first element in stack. The element stays inside stack.
+     * @throws NoSuchElementException when no elements present in object.
+     */
+    public T pick() {
+        if (isEmpty()) {throw new NoSuchElementException("Stack is empty, unable to pick any item.");}
+        return things[size - 1];
+    }
+
+    /**
      * Checks against this element present in stack.
      *
      * @return true if specific element is found in stack, false otherwise.
      */
     public boolean contains(T thing) {
+        if (isEmpty()) return false;
         boolean f = false;
         for (int i = 0; i < size; i++){
             if (things[i] == thing) {
@@ -96,7 +107,9 @@ public class AStack <T> implements Iterable<T>{
      * @param thing - value to be found
      * @return number of entries of specified value
      */
+
     public int count(T thing) {
+        if (isEmpty()) return 0;
         int cntr = 0;
         for (int i = 0; i < size; i++) {if (things[i] == thing) {cntr++;}}
         return cntr;

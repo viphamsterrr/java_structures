@@ -89,6 +89,7 @@ public class Stack <T> implements Iterable<T>{
      * @return true if specific element is found in stack, false otherwise.
      */
     public boolean contains(T thing) {
+        if (isEmpty()) return false;
         boolean f = false;
         for (T itr : this) {
             if (itr == thing) {
@@ -106,9 +107,19 @@ public class Stack <T> implements Iterable<T>{
      * @return number of entries of specified value
      */
     public int count(T thing) {
+        if (isEmpty()) return 0;
         int cntr = 0;
         for (T itr : this) {if (itr == thing) {cntr++;}}
         return cntr;
+    }
+
+    /**
+     * Returns last putted value without deleting it.
+     *
+     * @return first value in order to pop.
+     */
+    public T pick() {
+        return first.item;
     }
 
     @Override

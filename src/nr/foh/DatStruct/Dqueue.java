@@ -114,6 +114,17 @@ public class Dqueue<T> implements Iterable<T> {
     }
 
     /**
+     * Returns first elements in double-edged queue without deleting it.
+     *
+     * @return first element in double-edged queue. The element remains in queue.
+     * @throws NoSuchElementException when no elements present in object.
+     */
+    public T pickFirst() {
+        if (isEmpty()) {throw new NoSuchElementException("Queue is empty");}
+        return first.item;
+    }
+
+    /**
      * Returns last elements in double-edged queue and removes it.
      *
      * @return last element in double-edged queue.
@@ -127,6 +138,17 @@ public class Dqueue<T> implements Iterable<T> {
         last.next = null;
         size--;
         return ret;
+    }
+
+    /**
+     * Returns last elements in double-edged queue without deleting it.
+     *
+     * @return last element in double-edged queue. The element remains in queue.
+     * @throws NoSuchElementException when no elements present in object.
+     */
+    public T pickLast() {
+        if (isEmpty()) {throw new NoSuchElementException("Queue is empty");}
+        return last.item;
     }
 
     /**
@@ -146,6 +168,7 @@ public class Dqueue<T> implements Iterable<T> {
      * @return true if specific element is found in stack, false otherwise.
      */
     public boolean contains(T thing) {
+        if (isEmpty()) return false;
         boolean f = false;
         for (T itr : this) {
             if (itr == thing) {
@@ -163,11 +186,11 @@ public class Dqueue<T> implements Iterable<T> {
      * @return number of entries of specified value
      */
     public int count(T thing) {
+        if (isEmpty()) return 0;
         int cntr = 0;
         for (T itr: this) {if (itr == thing) {cntr++;}}
         return cntr;
     }
-
 
 @Override
     public Iterator<T> iterator() {return new DquIter();}

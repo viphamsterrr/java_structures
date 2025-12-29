@@ -111,6 +111,7 @@ public class RandStack<T> implements Iterable<T> {
      * @return true if specific element is found in stack, false otherwise.
      */
     public boolean contains(T thing) {
+        if (isEmpty()) return false;
         boolean f = false;
         for (int i = 0; i < size; i++) {
             if (items[i] == thing) {
@@ -147,6 +148,7 @@ public class RandStack<T> implements Iterable<T> {
      * @return number of entries of specified value
      */
     public int count(T thing) {
+        if (isEmpty()) return 0;
         int cntr = 0;
         for (T item : items) {if (item == thing) {cntr++;}}
         return cntr;
