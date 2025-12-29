@@ -1,4 +1,4 @@
-JAVA imlementation for some data structures.
+<font size=+2>JAVA imlementation for some data structures.</font> <br>
 Stack, Queue, Double-Edged Queue, Randomized Stack.
 
 Sorting methods.
