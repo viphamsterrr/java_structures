@@ -15,7 +15,6 @@ public class Sort {
      *
      * @param arr have to implement Comparable[] - array of data.
      * @param reversed for sorting in descending order. Default if false (ascending).
-     * @return nothing, void function, sorts existing array.
      */
     public static void insertion(Comparable[] arr, boolean reversed) {
         if (reversed) {insertionDesc(arr);}
@@ -60,7 +59,6 @@ public class Sort {
      *
      * @param arr have to implement Comparable[] - array of data.
      * @param reversed for sorting in descending order. Default if false (ascending).
-     * @return nothing, void function, sorts existing array.
      */
     public static void shell(Comparable[] arr, boolean reversed) {
         if (reversed) {shellDesc(arr);}
@@ -106,11 +104,49 @@ public class Sort {
     }
 
     /**
+     * Sorts array via merge sort method. Stable an effective sorting method.
+     *
+     * @param arr have to implement Comparable[] - array of data.
+     * @param reversed for sorting in descending order. Default if false (ascending).
+     */
+    public static void merge(Comparable[] arr, boolean reversed) {
+        if (reversed) {mergeDesc(arr);}
+        else{mergeAsc(arr);}
+    }
+
+    public static void merge(Comparable[] arr) {
+        merge(arr, false);
+    }
+
+    private static void mergeAsc(Comparable[] arr) {
+        Comparable[] hlp = new Comparable[arr.length];
+        mergeAsc(arr, hlp, 0, arr.length);
+    }
+
+    private static void mergeAsc(Comparable[] arr, Comparable[] hlp, int start, int finish) {
+        int middle = start + (finish - start) / 2;
+        if (!isSortedAsc(arr, start, middle)){mergeAsc(arr, hlp, start, middle);}
+        if (!isSortedAsc(arr, middle, finish)){mergeAsc(arr, hlp, middle, finish);}
+        glueArrAsc(arr, hlp, start, middle, finish);
+    }
+
+    private static void mergeDesc(Comparable[] arr) {
+        Comparable[] hlp = new Comparable[arr.length];
+        mergeDesc(arr, hlp, 0, arr.length);
+    }
+
+    private static void mergeDesc(Comparable[] arr, Comparable[] hlp, int start, int finish) {
+        int middle = start + (finish - start) / 2;
+        if (!isSortedDesc(arr, start, middle)){mergeDesc(arr, hlp, start, middle);}
+        if (!isSortedDesc(arr, middle, finish)){mergeDesc(arr, hlp, middle, finish);}
+        glueArrDesc(arr, hlp, start, middle, finish);
+    }
+
+    /**
      * Shuffles array of any type. No matter, ordered it or not, the method randomly shuffles current state.
      * Data types of array have not necessary be comparable.
      *
      * @param arr array of any type.
-     * @return nothing, void function, sorts existing array.
      * @throws NoSuchAlgorithmException if non-existent randomizing algorithm accidentally chosen
      */
 
@@ -126,6 +162,68 @@ public class Sort {
         catch (Exception e) {
             throw  new NoSuchAlgorithmException("Random generator failed.");
         }
+    }
+
+    private static void glueArrAsc(Comparable[] arr, Comparable[] hlp, int start, int middle, int finish) {
+        System.arraycopy(arr, start, hlp, start, finish - start);
+        int i = start;
+        int fa = start;
+        int sa = middle;
+        while (fa < middle || sa < finish) {
+            if (fa == middle) {
+                arr[i++] = hlp[sa++];
+            } else {
+                if (sa == finish) {
+                    arr[i++] = hlp[fa++];
+                } else {
+                    if (hlp[sa].compareTo(hlp[fa]) > 0) {
+                        arr[i++] = hlp[fa++];
+                    } else {
+                        arr[i++] = hlp[sa++];
+                    }
+                }
+            }
+        }
+    }
+
+    private static void glueArrDesc(Comparable[] arr, Comparable[] hlp, int start, int middle, int finish) {
+        System.arraycopy(arr, start, hlp, start, finish - start);
+        int i = start;
+        int fa = start;
+        int sa = middle;
+        while (fa < middle || sa < finish) {
+            if (fa == middle) {
+                arr[i++] = hlp[sa++];
+            } else {
+                if (sa == finish) {
+                    arr[i++] = hlp[fa++];
+                } else {
+                    if (hlp[sa].compareTo(hlp[fa]) < 0) {
+                        arr[i++] = hlp[fa++];
+                    } else {
+                        arr[i++] = hlp[sa++];
+                    }
+                }
+            }
+        }
+    }
+
+    private static boolean isSortedAsc(Comparable[] arr, int start, int finish) {
+        if (finish - start < 2) return true;
+        for (int i = start; i < finish - 1; i++) {
+            if (arr[i + 1].compareTo(arr[i]) < 0)
+                return false;
+        }
+        return true;
+    }
+
+    private static boolean isSortedDesc(Comparable[] arr, int start, int finish) {
+        if (finish - start < 2) return true;
+        for (int i = start; i < finish - 1; i++) {
+            if (arr[i + 1].compareTo(arr[i]) > 0)
+                return false;
+        }
+        return true;
     }
 
     public static void exchange(Object[] arr, int first, int second) {
