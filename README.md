@@ -2,4 +2,4 @@
 Stack, Queue, Double-Edged Queue, Randomized Stack.
 
 ## Sorting methods.
-Insertion and shell sort.
+Insertion, shell and merge sorts. (needs comparable interface support for data)
